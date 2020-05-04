@@ -1,0 +1,100 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "BFA Demo API",
+        "version": "1.0.0",
+        "description": "Micro servicio REST con definicion OpenAPI para demo BFA",
+        "contact": {
+            "name": "Eduardo Rivas Zapata",
+            "email": "erivasza@redhat.com"
+        }
+    },
+    "paths": {
+        "/bfa/consulta": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Saldo"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Cuentas listadas"
+                    },
+                    "404": {
+                        "description": "No se encontraron las cuentas"
+                    }
+                },
+                "description": "Obtener todas las cuentas"
+            }
+        },
+        "/bfa/consulta/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Saldo"
+                                }
+                            }
+                        },
+                        "description": "Cuenta encontrada"
+                    },
+                    "404": {
+                        "description": "Cuenta no encontrada"
+                    }
+                },
+                "description": "Obtener cuenta por ID/Numero de Cuenta"
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "description": "ID de la cuenta a consultar",
+                    "schema": {
+                        "type": "integer"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        }
+    },
+    "components": {
+        "schemas": {
+            "Saldo": {
+                "title": "Root Type for Saldo",
+                "description": "Saldo de una cuenta para consulta",
+                "type": "object",
+                "properties": {
+                    "numeroCuenta": {
+                        "type": "string"
+                    },
+                    "nombreCuenta": {
+                        "type": "string"
+                    },
+                    "monto": {
+                        "format": "double",
+                        "type": "number"
+                    }
+                },
+                "example": {
+                    "numeroCuenta": "12345678",
+                    "nombreCuenta": "Eduardo Rivas Zapata",
+                    "monto": 1.99
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "BFA",
+            "description": ""
+        }
+    ]
+}
